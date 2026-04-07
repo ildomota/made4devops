@@ -1,28 +1,54 @@
+#include <string.h>
+#include "parser.h"
+#include "ops.h"
 #include "calculator.h"
-#include <stddef.h>
-#include "add_op.h"
-#include "sub_op.h"
-#include "mul_op.h"
-#include "div_op.h"
+#include "stack.h"
+#include "parse.h"
 
-bool calculate(calcop_t operation, calctask_t *task)
+void calculator_init(void)
 {
-    if (task == NULL)
+    reset();
+}
+
+float calculate(const char *input)
+{
+    char token[20];
+    int index = 0;
+
+    reset();
+
+    while (next_token((char *)input, &index, token))
     {
-        return false;
+        if (strcmp(token, "+") == 0)
+        {
+            float b = pop();
+            float a = pop();
+            push(add(a, b));
+        }
+        else if (strcmp(token, "-") == 0)
+        {
+            float b = pop();
+            float a = pop();
+            push(sub(a, b));
+        }
+        else if (strcmp(token, "*") == 0)
+        {
+            float b = pop();
+            float a = pop();
+            push(mul(a, b));
+        }
+        else if (strcmp(token, "/") == 0)
+        {
+            float b = pop();
+            float a = pop();
+            push(divi(a, b));
+        }
+        else
+        {
+            float value = get_operand(token);
+            push(value);
+        }
     }
 
-    switch (operation)
-    {
-    case CALC_ADD:
-        return add_op(task);
-    case CALC_SUB:
-        return subtract_op(task);
-    case CALC_MUL:
-        return multiply_op(task);
-    case CALC_DIV:
-        return divide_op(task);
-    default:
-        return false;
-    }
+    return pop();
 }

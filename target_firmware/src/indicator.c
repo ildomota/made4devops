@@ -1,6 +1,18 @@
 #include "indicator.h"
+#include "led.h"
 
-void indicator_set_state(indicator_state_t state)
+static indicator_t current_state = INDICATOR_OFF;
+
+void indicator_set(indicator_t state)
 {
-    // empty for now (we will mock behavior in tests)
+    current_state = state;
+
+    if (state == INDICATOR_ON)
+    {
+        led_set(LED_ON);
+    }
+    else if (state == INDICATOR_OFF)
+    {
+        led_set(LED_OFF);
+    }
 }

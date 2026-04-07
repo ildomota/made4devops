@@ -7,8 +7,8 @@ typedef enum
     INDICATOR_ON,
     INDICATOR_BLINK_SLOW,
     INDICATOR_BLINK_FAST
-} indicator_state_t;
+} indicator_t;
 
-void indicator_set_state(indicator_state_t state);
+void indicator_set(indicator_t state);
 
 #endif

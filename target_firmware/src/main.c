@@ -2,19 +2,27 @@
 #include <util/delay.h>
 #include <avr/io.h>
 #include "serial_com.h"
+#include "led.h"
+#include "indicator.h"
+#include "calculator.h"
+#include "ui.h"
 
-int main()
+int main(void)
 {
-    unsigned int counter = 0;
-    uart_init();
-    DDRB = 0xff;
+    char buffer[100];
 
-    do
+    uart_init();
+    led_init();
+    calculator_init();
+
+    ui_puts("Enter expression:\n");
+
+    while (1)
     {
-        PORTB = 0xff;
-        __builtin_avr_delay_cycles(4000000);
-        PORTB = 0x0;
-        __builtin_avr_delay_cycles(4000000);
-       printf("Counter: %u\n\r", counter++);
-    } while (1);
+        if (ui_gets(buffer) != NULL)
+        {
+            float result = calculate(buffer);
+            printf("Result: %f\n", result);
+        }
+    }
 }
