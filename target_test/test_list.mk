@@ -31,5 +31,9 @@
 $(eval $(call TEST_DEFINITION, test_add_op.c, serial_com.c add_op.c))
 $(eval $(call TEST_DEFINITION, test_mul_op.c, serial_com.c mul_op.c))
 $(eval $(call TEST_DEFINITION, test_fff.c, serial_com.c))
+$(eval $(call TEST_DEFINITION, test_all_base_ops.c, \
+calculator.c mul_op.c div_op.c sub_op.c add_op.c))
+$(eval $(call TEST_DEFINITION, test_calculate.c, calculator.c ))
+$(eval $(call TEST_DEFINITION, test_indicator.c, indicator.c))
 
 # ================== Define all tests ABOVE this line ==================
